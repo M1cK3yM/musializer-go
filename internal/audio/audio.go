@@ -1,9 +1,13 @@
 package audio
 
-import rl "github.com/gen2brain/raylib-go/raylib"
+import (
+	rl "github.com/gen2brain/raylib-go/raylib"
+)
 
 type Music struct {
 	music      rl.Music
+	path       string
+	wave       rl.Wave
 	play       bool
 	timePlayed float32
 }
@@ -14,8 +18,18 @@ func GetTimePlayed() float32 {
 	return m.timePlayed
 }
 
+func GetWaveData() rl.Wave {
+	return m.wave
+}
+
+func GetMusicStream() rl.AudioStream {
+	return m.music.Stream
+}
+
 func InitMusic(path string) {
 	m.music = rl.LoadMusicStream(path)
+	m.path = path
+	m.wave = rl.LoadWave(path)
 	rl.PlayMusicStream(m.music)
 	m.play = true
 }
@@ -32,14 +46,4 @@ func TogglePlay() {
 	} else {
 		rl.PauseMusicStream(m.music)
 	}
-}
-
-func GetWaveData() []float32 {
-	samples := rl.GetMusicTimePlayed(m.music) // You'd expand to real wave sampling
-	return []float32{float32(samples)}
-}
-
-func GetFFTData() []float32 {
-	// Real FFT data generation would be here
-	return []float32{}
 }

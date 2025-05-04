@@ -8,4 +8,4 @@ var (
 	FPS          int32 = 60
 )
 
-var BackgroundColor = rl.Black
+var BackgroundColor = rl.Color{R: 18, G: 18, B: 18, A: 1}
